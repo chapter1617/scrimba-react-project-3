@@ -9,4 +9,10 @@
   display: inline-block;
   margin-right: 4px;
   border-radius: 5px;
+  cursor: pointer; /* for accecibility */
+}
+
+/* for accecibility */
+.box:active {
+  transform: none;
 }

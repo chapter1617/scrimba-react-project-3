@@ -26,32 +26,51 @@ const [squares , setSquares] = useState(boxes)
      */
 
 
-   function toggle(id){
+  //  function toggle(id){
+  //     setSquares(prevSquares => {
+  //       const newSquares = []
+  //       for(let i = 0; i < prevSquares.length; i++) {
+  //           const currentSquare = prevSquares[i]
+  //           if(currentSquare.id === id) {
+  //               const updatedSquare = {
+  //                   ...currentSquare,
+  //                   on: !currentSquare.on
+  //               }
+  //               newSquares.push(updatedSquare)
+  //           } else {
+  //               newSquares.push(currentSquare)
+  //           }
+  //       }
+  //       return newSquares
+  //     })
+  //  }
+
+    // Alternate toggle function with more effective code usoing map
+
+    function toggle(id){
       setSquares(prevSquares => {
-        const newSquares = []
-        for(let i = 0; i < prevSquares.length; i++) {
-            const currentSquare = prevSquares[i]
-            if(currentSquare.id === id) {
-                const updatedSquare = {
-                    ...currentSquare,
-                    on: !currentSquare.on
-                }
-                newSquares.push(updatedSquare)
-            } else {
-                newSquares.push(currentSquare)
-            }
-        }
-        return newSquares
+        return prevSquares.map((square)=>{
+            return square.id === id ? {...square, on: !square.on} : square
+
+        })
+        
       })
-   }
+    }
 
 const squareElements = squares.map( square => (
   
+  // <Box 
+  // on={square.on} 
+  // key={square.id} 
+  // id={square.id} 
+  // toggle={toggle}
+  // />
+
   <Box 
   on={square.on} 
   key={square.id} 
-  id={square.id} 
-  toggle={toggle}
+   
+  toggle={()=> toggle(square.id)}
   />
 )
 
