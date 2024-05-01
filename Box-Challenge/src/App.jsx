@@ -16,11 +16,43 @@ const [squares , setSquares] = useState(boxes)
      *    the backgroundColor of the box. If it's `on`, set the
      *    backgroundColor to "#222222". If off, set it to "none"
      */
-    
+
+   /**
+     * Challenge: Create a toggle() function that logs
+     * "clicked!" to the console
+     * 
+     * Pass that function down to each of the Box components
+     * and set it up so when they get clicked it runs the function
+     */
+
+
+   function toggle(id){
+      setSquares(prevSquares => {
+        const newSquares = []
+        for(let i = 0; i < prevSquares.length; i++) {
+            const currentSquare = prevSquares[i]
+            if(currentSquare.id === id) {
+                const updatedSquare = {
+                    ...currentSquare,
+                    on: !currentSquare.on
+                }
+                newSquares.push(updatedSquare)
+            } else {
+                newSquares.push(currentSquare)
+            }
+        }
+        return newSquares
+      })
+   }
 
 const squareElements = squares.map( square => (
   
-  <Box on={square.on} key={square.id}/>
+  <Box 
+  on={square.on} 
+  key={square.id} 
+  id={square.id} 
+  toggle={toggle}
+  />
 )
 
 )
