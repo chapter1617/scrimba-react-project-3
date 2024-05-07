@@ -3,14 +3,31 @@ import { useState } from "react"
 
 function Meme(){
 
-    const [memeImage,setMemeImage] = useState("")
+    const [meme,setMemeImage] = useState({
+        topText: "",
+        bottomText: "",
+        randomImage: "http://i.imgflip.com/1bij.jpg"
+    })
 
+    const [allMemeImages, setAllMemeImages] = useState(memesData)
 
-    function handleClick(){
-        const memesArray = memesData.data.memes
+    function getMemeImage() {
+        const memesArray = allMemeImages.data.memes
         const randomNumber = Math.floor(Math.random() * memesArray.length)
-        //const url = memesArray[randomNumber].url
-        setMemeImage(memesArray[randomNumber].url)
+        const url = memesArray[randomNumber].url
+        setMeme(prevMeme => ({
+            ...prevMeme,
+            randomImage: url
+        }))
+        
+    }
+
+    function handleChange(event) {
+        const {name, value} = event.target
+        setMeme(prevMeme => ({
+            ...prevMeme,
+            [name]: value
+        }))
     }
 
     return(
@@ -21,8 +38,11 @@ function Meme(){
                 <input 
                     id="top-text"
                     type="text" 
-                    placeholder="Shut up"
+                    placeholder="Top text"
                     className="form--input"
+                    name="topText"
+                    value={meme.topText}
+                    onChange={handleChange}
                 />
                 
                
@@ -31,17 +51,24 @@ function Meme(){
                     <input 
                     id="bottom-text"
                     type="text" 
-                    placeholder="and take my money"
+                    placeholder="Bottom text"
                     className="form--input"
+                    name="bottomText"
+                    value={meme.bottomText}
+                    onChange={handleChange}
                     />
                     
                 
                 <button
-                    className="form--button" onClick ={handleClick}
+                    className="form--button" onClick ={getMemeImage}
                 >   Get a new meme image 🖼</button>
             </div>
 
-            <img src={memeImage} className="meme--image"/>
+            <div className="meme">
+                <img src={meme.randomImage} className="meme--image" />
+                <h2 className="meme--text top">{meme.topText}</h2>
+                <h2 className="meme--text bottom">{meme.bottomText}</h2>
+            </div>
         </main>
     )
 
